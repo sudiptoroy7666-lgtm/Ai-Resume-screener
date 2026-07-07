@@ -38,7 +38,7 @@ val BASE_URL = "https://api.cerebras.ai/v1/"
 
 // WARNING: Hardcoding API keys in client-side code is a security risk for public production apps.
 // For a real enterprise app, route this request through your own backend server.
-val API_KEY = "csk-m42hxewredpwjfrwh8yd9ryw6444p444efjwjetvnjk3fecw"
+val API_KEY = ""
 
 // Valid Cerebras models: "llama3.1-8b", "llama3.1-70b", "llama-3.3-70b"
 val MODEL_ID = "gpt-oss-120b"
