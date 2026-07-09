@@ -1,175 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/colorBackground"
-    android:fillViewport="true"
+    android:background="@drawable/gradient_background"
     tools:context=".MainActivity">
 
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="wrap_content">
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="AI Resume Screener"
+            app:menu="@menu/main_menu"
+            style="@style/Widget.Material3.Toolbar" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-        <TextView
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fillViewport="true">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ATS Matcher"
-            android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
-            android:textStyle="bold"
-            android:layout_marginBottom="24dp"
-            android:gravity="center"/>
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <!-- Resume Upload Section -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardElevation="2dp"
-            app:cardCornerRadius="12dp"
-            android:layout_marginBottom="16dp">
-
-            <LinearLayout
+            <!-- Upload Card -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                app:cardElevation="2dp"
+                app:cardCornerRadius="16dp"
+                android:layout_marginBottom="16dp"
+                app:strokeWidth="1dp"
+                android:backgroundTint="@color/white"
+                app:strokeColor="?attr/colorOutlineVariant">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="1. Upload Resume (PDF, DOC, DOCX)"
-                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                    android:layout_marginBottom="8dp"/>
+                    android:orientation="vertical"
+                    android:background="@drawable/gradient_background"
+                    android:padding="16dp">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnUploadResume"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Choose File"
-                    app:icon="@android:drawable/ic_menu_upload"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="1. Upload Resume (PDF, DOC, DOCX)"
+                        android:textColor="@color/black"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                        android:layout_marginBottom="12dp"/>
 
-                <TextView
-                    android:id="@+id/tvFileName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="No file selected"
-                    android:textColor="?attr/colorOnSurfaceVariant"
-                    android:layout_marginTop="8dp"/>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnUploadResume"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Choose File"
+                        app:icon="@android:drawable/ic_menu_upload"
+                        style="@style/Widget.Material3.Button.TonalButton"/>
 
-        <!-- Job Description Section -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardElevation="2dp"
-            app:cardCornerRadius="12dp"
-            android:layout_marginBottom="24dp">
+                    <TextView
+                        android:id="@+id/tvFileName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="No file selected"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <!-- Job Description Card -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="2. Paste Job Description"
-                android:padding="16dp"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+                app:cardElevation="2dp"
+                app:cardCornerRadius="16dp"
+                android:layout_marginBottom="24dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="?attr/colorOutlineVariant"
+                android:backgroundTint="@color/white"
+                >
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etJobDescription"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minLines="5"
-                    android:gravity="top|start"
-                    android:inputType="textMultiLine"/>
-            </com.google.android.material.textfield.TextInputLayout>
-        </com.google.android.material.card.MaterialCardView>
+                    android:hint="2. Paste Job Description"
+                    app:hintTextColor="@color/black"
+                    android:padding="16dp"
+                    android:background="@drawable/gradient_background"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
-        <!-- Analyze Button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnAnalyze"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Analyze Resume"
-            android:textSize="16sp"
-            android:padding="12dp"
-            style="@style/Widget.Material3.Button.TonalButton"/>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etJobDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top|start"
+                        android:textColor="@color/black"
+                        android:inputType="textMultiLine"
+                        android:minLines="5" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="16dp"
-            android:visibility="gone"/>
-
-        <!-- Results Section -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardResults"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardElevation="4dp"
-            app:cardCornerRadius="16dp"
-            app:cardBackgroundColor="?attr/colorPrimaryContainer"
-            android:layout_marginTop="24dp"
-            android:visibility="gone">
-
-            <LinearLayout
+            <!-- Analyze Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAnalyze"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="24dp">
+                android:text="Analyze Resume"
+                android:textSize="16sp"
+                android:padding="12dp"
+                style="@style/Widget.Material3.Button"/>
 
-                <TextView
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/progressBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:indeterminate="true"
+                android:visibility="gone"/>
+
+            <!-- Results Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardResults"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="4dp"
+                app:cardCornerRadius="24dp"
+                app:cardBackgroundColor="?attr/colorSurfaceVariant"
+                android:backgroundTint="#90CAF9"
+                android:layout_marginTop="24dp"
+                android:visibility="gone">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="ATS Compatibility Score"
-                    android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-                    android:gravity="center"/>
+                    android:orientation="vertical"
+                    android:padding="24dp">
 
-                <TextView
-                    android:id="@+id/tvScore"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textSize="64sp"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:textColor="?attr/colorOnPrimaryContainer"
-                    android:layout_marginVertical="16dp"/>
+                    <FrameLayout
+                        android:layout_width="160dp"
+                        android:layout_height="160dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="16dp">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Matched Keywords"
-                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                    android:textStyle="bold"
-                    android:layout_marginTop="8dp"/>
-                <TextView
-                    android:id="@+id/tvMatched"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="None"
-                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"/>
+                        <com.google.android.material.progressindicator.CircularProgressIndicator
+                            android:id="@+id/progressScore"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:indicatorSize="160dp"
+                            app:trackThickness="16dp"
+                            app:trackColor="?attr/colorSurface"
+                            app:indicatorColor="?attr/colorPrimary"
+                            android:indeterminate="false"
+                            tools:progress="75" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Missing Keywords"
-                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                    android:textStyle="bold"
-                    android:layout_marginTop="16dp"/>
-                <TextView
-                    android:id="@+id/tvMissing"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="None"
-                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="vertical"
+                            android:gravity="center">
+                            <TextView
+                                android:id="@+id/tvScoreText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="75%"
+                                android:textSize="40sp"
+                                android:textStyle="bold"
+                                android:textColor="?attr/colorPrimary" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="ATS Score"
+                                android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
+                                android:textColor="?attr/colorOnSurfaceVariant"/>
+                        </LinearLayout>
+                    </FrameLayout>
 
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+                    <TextView
+                        android:id="@+id/tvSummary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                        android:textAlignment="center"
+                        android:layout_marginBottom="24dp"/>
 
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Hard Skills" android:textAppearance="@style/TextAppearance.Material3.TitleMedium" android:textStyle="bold" android:layout_marginBottom="8dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Matched" android:textAppearance="@style/TextAppearance.Material3.LabelLarge" android:textColor="?attr/colorPrimary" android:layout_marginBottom="4dp"/>
+                    <com.google.android.flexbox.FlexboxLayout android:id="@+id/flexHardMatched" android:layout_width="match_parent" android:layout_height="wrap_content" app:flexWrap="wrap" app:alignItems="flex_start" android:layout_marginBottom="12dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Missing" android:textAppearance="@style/TextAppearance.Material3.LabelLarge" android:textColor="?attr/colorError" android:layout_marginBottom="4dp"/>
+                    <com.google.android.flexbox.FlexboxLayout android:id="@+id/flexHardMissing" android:layout_width="match_parent" android:layout_height="wrap_content" app:flexWrap="wrap" app:alignItems="flex_start" android:layout_marginBottom="24dp"/>
+
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Soft Skills" android:textAppearance="@style/TextAppearance.Material3.TitleMedium" android:textStyle="bold" android:layout_marginBottom="8dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Matched" android:textAppearance="@style/TextAppearance.Material3.LabelLarge" android:textColor="?attr/colorPrimary" android:layout_marginBottom="4dp"/>
+                    <com.google.android.flexbox.FlexboxLayout android:id="@+id/flexSoftMatched" android:layout_width="match_parent" android:layout_height="wrap_content" app:flexWrap="wrap" app:alignItems="flex_start" android:layout_marginBottom="12dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Missing" android:textAppearance="@style/TextAppearance.Material3.LabelLarge" android:textColor="?attr/colorError" android:layout_marginBottom="4dp"/>
+                    <com.google.android.flexbox.FlexboxLayout android:id="@+id/flexSoftMissing" android:layout_width="match_parent" android:layout_height="wrap_content" app:flexWrap="wrap" app:alignItems="flex_start" android:layout_marginBottom="24dp"/>
+
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="ATS Formatting Issues" android:textAppearance="@style/TextAppearance.Material3.TitleMedium" android:textStyle="bold" android:layout_marginBottom="8dp"/>
+                    <com.google.android.flexbox.FlexboxLayout android:id="@+id/flexFormatting" android:layout_width="match_parent" android:layout_height="wrap_content" app:flexWrap="wrap" app:alignItems="flex_start"/>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
