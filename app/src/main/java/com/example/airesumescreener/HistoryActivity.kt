@@ -2,6 +2,7 @@ package com.example.airesumescreener
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.airesumescreener.databinding.ActivityHistoryBinding
@@ -21,8 +22,14 @@ class HistoryActivity : AppCompatActivity() {
 
         binding.topAppBar.setOnMenuItemClickListener { menuItem ->
             if (menuItem.itemId == R.id.action_clear) {
+                val current = historyManager.getHistory()
+                if (current.isEmpty()) {
+                    Toast.makeText(this, "History is already empty", Toast.LENGTH_SHORT).show()
+                    return@setOnMenuItemClickListener true
+                }
                 historyManager.clearHistory()
                 loadData()
+                Toast.makeText(this, "History cleared", Toast.LENGTH_SHORT).show()
                 true
             } else false
         }
