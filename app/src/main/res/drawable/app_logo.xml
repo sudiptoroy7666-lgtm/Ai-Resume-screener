@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="512dp"
+    android:height="512dp"
+    android:viewportWidth="512"
+    android:viewportHeight="512">
+
+    <!-- Background (rounded square) -->
+    <path
+        android:fillColor="#2E1065"
+        android:pathData="M80,0 L432,0 Q512,0 512,80 L512,432 Q512,512 432,512 L80,512 Q0,512 0,432 L0,80 Q0,0 80,0 Z" />
+
+    <!-- AI / NLP sparkle (four-point star) -->
+    <path
+        android:fillColor="#FDE047"
+        android:pathData="M400,60 L410,85 L435,90 L410,95 L400,120 L390,95 L365,90 L390,85 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M400,90 m -4,0 a 4,4 0 1,0 8,0 a 4,4 0 1,0 -8,0" />
+
+    <!-- Neural network nodes (embeddings representation) -->
+    <!-- Node 1 -->
+    <path
+        android:fillColor="#A78BFA"
+        android:pathData="M130,100 m -5,0 a 5,5 0 1,0 10,0 a 5,5 0 1,0 -10,0" />
+    <!-- Node 2 -->
+    <path
+        android:fillColor="#C4B5FD"
+        android:pathData="M160,80 m -5,0 a 5,5 0 1,0 10,0 a 5,5 0 1,0 -10,0" />
+    <!-- Node 3 -->
+    <path
+        android:fillColor="#8B5CF6"
+        android:pathData="M130,130 m -5,0 a 5,5 0 1,0 10,0 a 5,5 0 1,0 -10,0" />
+
+    <!-- Dashed connections between nodes -->
+    <path
+        android:strokeColor="#C4B5FD"
+        android:strokeWidth="2"
+
+        android:fillColor="@android:color/transparent"
+        android:pathData="M130,100 L160,80" />
+    <path
+        android:strokeColor="#C4B5FD"
+        android:strokeWidth="2"
+
+        android:fillColor="@android:color/transparent"
+        android:pathData="M130,100 L130,130" />
+    <path
+        android:strokeColor="#DDD6FE"
+        android:strokeWidth="1.5"
+
+        android:fillColor="@android:color/transparent"
+        android:pathData="M160,80 L190,90" />
+
+    <!-- Pulsing ring (AI scanning effect) -->
+    <path
+        android:strokeColor="#A78BFA"
+        android:strokeWidth="2"
+
+        android:fillColor="@android:color/transparent"
+        android:pathData="M256,220 m -150,0 a 150,150 0 1,0 300,0 a 150,150 0 1,0 -300,0" />
+
+    <!-- Match score gauge (semicircle arc) -->
+    <!-- Gradient stroke: red → yellow → green -->
+    <path
+        android:strokeWidth="18"
+        android:strokeLineCap="round"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M96,220 A 160,160 0 0,1 416,220">
+        <aapt:attr name="android:strokeColor">
+            <gradient
+                android:startX="96"
+                android:startY="220"
+                android:endX="416"
+                android:endY="220"
+                android:type="linear">
+                <item android:offset="0" android:color="#EF4444" />
+                <item android:offset="0.4" android:color="#F59E0B" />
+                <item android:offset="1" android:color="#10B981" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Gauge needle (pointing to ~85% match) -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="5"
+        android:strokeLineCap="round"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M256,220 L385,126" />
+
+    <!-- Center badge (match score placeholder with checkmark) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M256,220 m -28,0 a 28,28 0 1,0 56,0 a 28,28 0 1,0 -56,0" />
+    <path
+        android:strokeColor="#10B981"
+        android:strokeWidth="7"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M242,220 L250,230 L270,210" />
+
+    <!-- Resume document (with folded corner) -->
+    <!-- Document body -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M170,260 h150 a8,8 0 0,1 8,8 v120 a8,8 0 0,1 -8,8 h-150 a8,8 0 0,1 -8,-8 v-120 a8,8 0 0,1 8,-8 Z" />
+    <!-- Fold triangle -->
+    <path
+        android:fillColor="#E5E7EB"
+        android:pathData="M312,260 L328,276 L328,268 L320,260 Z" />
+
+    <!-- Text lines (resume content) -->
+    <path
+        android:strokeColor="#9CA3AF"
+        android:strokeWidth="6"
+        android:strokeLineCap="round"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M190,290 L290,290" />
+    <path
+        android:strokeColor="#D1D5DB"
+        android:strokeWidth="6"
+        android:strokeLineCap="round"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M190,310 L270,310" />
+    <path
+        android:strokeColor="#D1D5DB"
+        android:strokeWidth="6"
+        android:strokeLineCap="round"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M190,330 L280,330" />
+
+    <!-- Highlighted ATS keyword (green block) -->
+    <path
+        android:fillColor="#10B981"
+        android:pathData="M230,287 h45 v6 h-45 Z" />
+
+    <!-- Bullet points -->
+    <path
+        android:fillColor="#6D28D9"
+        android:pathData="M180,293 m -4,0 a 4,4 0 1,0 8,0 a 4,4 0 1,0 -8,0" />
+    <path
+        android:fillColor="#6D28D9"
+        android:pathData="M180,313 m -4,0 a 4,4 0 1,0 8,0 a 4,4 0 1,0 -8,0" />
+    <path
+        android:fillColor="#6D28D9"
+        android:pathData="M180,333 m -4,0 a 4,4 0 1,0 8,0 a 4,4 0 1,0 -8,0" />
+
+</vector>

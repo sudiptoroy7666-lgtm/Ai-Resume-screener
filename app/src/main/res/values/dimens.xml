@@ -1,0 +1,6 @@
+<!-- res/values/dimens.xml -->
+<resources>
+    <dimen name="chip_min_height">32dp</dimen>
+    <dimen name="chip_padding_h">14dp</dimen>
+    <dimen name="chip_min_width">0dp</dimen>
+</resources>
