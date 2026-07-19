@@ -17,6 +17,39 @@
         android:orientation="vertical"
         android:padding="20dp">
 
+        <!-- Source badge row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvSourceBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#E0F2FE"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="3dp"
+                android:textColor="#0369A1"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                tools:text="PERSONAL SCAN" />
+
+            <TextView
+                android:id="@+id/tvSourceDetail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="#94A3B8"
+                android:textSize="11sp"
+                tools:text="Acme Corp — Senior Dev" />
+        </LinearLayout>
+
         <!-- Top row: Score ring + File info -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,7 +57,6 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <!-- Mini score indicator -->
             <RelativeLayout
                 android:layout_width="52dp"
                 android:layout_height="52dp">
@@ -80,7 +112,6 @@
                     tools:text="Jul 08, 2026 14:30" />
             </LinearLayout>
 
-            <!-- Score badge -->
             <TextView
                 android:id="@+id/tvScoreBadge"
                 android:layout_width="wrap_content"
@@ -88,20 +119,18 @@
                 android:background="#D1FAE5"
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="4dp"
-                android:text="Strong"
                 android:textColor="#065F46"
                 android:textSize="11sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="Strong" />
         </LinearLayout>
 
-        <!-- Divider -->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginVertical="14dp"
             android:background="#F1F5F9" />
 
-        <!-- Summary -->
         <TextView
             android:id="@+id/tvSummary"
             android:layout_width="match_parent"
@@ -113,7 +142,6 @@
             android:textSize="14sp"
             tools:text="Strong alignment with job requirements..." />
 
-        <!-- Keywords row -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

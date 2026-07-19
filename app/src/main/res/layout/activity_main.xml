@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:background="#134E4A"
-            app:title="Ai Resume Screener"
+            app:title="CV Screener"
             app:menu="@menu/main_menu"
             app:layout_scrollFlags="scroll|enterAlways|snap">
 
@@ -237,7 +237,7 @@
                             android:background="#F1F5F9"
                             android:paddingHorizontal="10dp"
                             android:paddingVertical="4dp"
-                            android:text="PDF · DOC · DOCX"
+                            android:text="PDF · DOCX"
                             android:textColor="#64748B"
                             android:textSize="11sp"
                             android:textStyle="bold" />
@@ -263,24 +263,70 @@
                         app:strokeWidth="2dp"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
 
+                    <!-- File Info Container (hidden initially) -->
+                    <LinearLayout
+                        android:id="@+id/fileInfoContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:background="#D1FAE5"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="12dp"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@android:drawable/checkbox_on_background"
+                            app:tint="#059669" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvFileName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="resume_john_doe.pdf"
+                                android:textColor="#065F46"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:maxLines="1"
+                                android:ellipsize="end" />
+
+                            <TextView
+                                android:id="@+id/tvFileInfo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="PDF • 245 KB"
+                                android:textColor="#059669"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <ImageButton
+                            android:id="@+id/btnRemoveFile"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:contentDescription="Remove file"
+                            android:src="@android:drawable/ic_menu_close_clear_cancel"
+                            app:tint="#991B1B" />
+                    </LinearLayout>
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:gravity="center"
                         android:text="Secure upload — processed in-memory, never stored"
-                        android:textColor="#94A3B8"
+                        android:textColor="@color/purple_700"
                         android:textSize="11sp" />
 
-                    <TextView
-                        android:id="@+id/tvFileName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="No file selected"
-                        android:textColor="#94A3B8"
-                        android:textSize="13sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -373,7 +419,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAnalyze"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:backgroundTint="#0F766E"
                 android:elevation="4dp"
                 android:fontFamily="sans-serif-medium"
@@ -401,9 +447,7 @@
                 app:trackColor="#E2E8F0"
                 app:trackThickness="3dp" />
 
-            <!-- ========================================================= -->
-            <!-- ===== RESULTS SECTION ==================================== -->
-            <!-- ========================================================= -->
+            <!-- ===== RESULTS SECTION ===== -->
             <LinearLayout
                 android:id="@+id/cardResults"
                 android:layout_width="match_parent"
@@ -944,7 +988,7 @@
                         android:id="@+id/btnExport"
                         style="@style/Widget.MaterialComponents.Button.TextButton"
                         android:layout_width="0dp"
-                        android:layout_height="50dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginEnd="6dp"
                         android:layout_weight="1"
                         android:backgroundTint="#0F172A"
@@ -963,7 +1007,7 @@
                         android:id="@+id/btnReset"
                         style="@style/Widget.Material3.Button.OutlinedButton"
                         android:layout_width="0dp"
-                        android:layout_height="50dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
                         android:layout_weight="1"
                         android:text="Screen Another"
