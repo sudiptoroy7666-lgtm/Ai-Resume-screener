@@ -111,11 +111,11 @@ Splash Screen
         → [Save Candidate to Firestore]
         → [Increment CV Count]
       → Success Toast → Form Reset
-```
+
 
 ### 3.2 🏢 HR / Recruiter (Admin)
 
-```
+
 Splash Screen
   → Role Selection ("I'm HR / Recruiter")
     → AdminActivity
@@ -223,7 +223,6 @@ Any Screen → Menu → "History"
 | RecyclerView | 1.3.2 | List rendering |
 | Core SplashScreen | 1.0.1 | Splash screen API |
 
---
 
 ## 6. Project Structure
 
