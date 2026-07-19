@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "546771929700",
+    "project_id": "ai-resume-screener-df66d",
+    "storage_bucket": "ai-resume-screener-df66d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:546771929700:android:ce6cd3d66fba2f24d02d71",
+        "android_client_info": {
+          "package_name": "com.example.airesumescreener"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "546771929700-aoj3976emssbvih8lcihp10p170puu45.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBuaqUHX9jzkzbH17zBZL8680CyrOWPDo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "546771929700-aoj3976emssbvih8lcihp10p170puu45.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

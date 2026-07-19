@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="40dp"
+                android:src="@drawable/app_logo"
+                android:backgroundTint="#0F766E" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="ResumeAI"
+                android:textColor="#134E4A"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="How would you like to use the app?"
+                android:textColor="#64748B"
+                android:textSize="15sp" />
+
+            <!-- APPLICANT CARD -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardApplicant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="4dp"
+                app:strokeColor="#0F766E"
+                app:strokeWidth="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/circle_bg"
+                            android:backgroundTint="#0D9488" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="I'm an Applicant"
+                                android:textColor="#0F172A"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="Submit my resume to an organization"
+                                android:textColor="#64748B"
+                                android:textSize="13sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnApplicant"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:layout_marginTop="16dp"
+                        android:text="Continue as Applicant"
+                        android:textStyle="bold"
+                        app:backgroundTint="#0F766E"
+                        app:cornerRadius="12dp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- HR CARD -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardHr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="4dp"
+                app:strokeColor="#E2E8F0"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/circle_bg"
+                            android:backgroundTint="#134E4A" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="I'm HR / Recruiter"
+                                android:textColor="#0F172A"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="Manage organizations &amp; screen resumes"
+                                android:textColor="#64748B"
+                                android:textSize="13sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnHr"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:layout_marginTop="16dp"
+                        android:text="Continue as HR"
+                        android:textColor="#134E4A"
+                        android:textStyle="bold"
+                        app:cornerRadius="12dp"
+                        app:strokeColor="#134E4A" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:gravity="center"
+                android:text="You can switch roles anytime from any screen"
+                android:textColor="#94A3B8"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

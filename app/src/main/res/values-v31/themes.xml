@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Android 12+ (API 31+) Custom Splash Screen Configuration -->
+    <style name="Theme.App.Starting" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Immediately show a white background matching your custom splash design -->
+        <item name="android:windowBackground">@color/white</item>
+        <!-- Remove any title bar -->
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <!-- Prevent the system from drawing a default status bar background -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+
+        <!-- Customize the Android 12+ system splash screen to show no icon -->
+        <item name="android:windowSplashScreenAnimatedIcon">@android:color/transparent</item>
+        <!-- Set the system splash background to white to match SplashActivity -->
+        <item name="android:windowSplashScreenBackground">@color/white</item>
+    </style>
+</resources>

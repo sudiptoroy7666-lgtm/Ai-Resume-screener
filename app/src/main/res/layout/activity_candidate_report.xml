@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="#134E4A"
+            app:titleTextColor="@android:color/white"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:navigationIconTint="@android:color/white" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Print Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPrint"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="16dp"
+                android:text="Print Full Report"
+                android:textStyle="bold"
+                app:backgroundTint="#0F172A"
+                app:cornerRadius="12dp"
+                app:icon="@android:drawable/ic_menu_send"
+                app:iconGravity="textStart" />
+
+            <!-- Verdict Strip -->
+            <LinearLayout
+                android:id="@+id/verdictStrip"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginBottom="16dp"
+                android:background="#FEF3C7"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp">
+
+                <View
+                    android:id="@+id/verdictDot"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:background="#D97706" />
+
+                <TextView
+                    android:id="@+id/tvVerdict"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:letterSpacing="0.08"
+                    android:text="MODERATE MATCH"
+                    android:textColor="#92400E"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Score Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#E2E8F0"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="24dp">
+
+                    <RelativeLayout
+                        android:layout_width="140dp"
+                        android:layout_height="140dp">
+
+                        <com.google.android.material.progressindicator.CircularProgressIndicator
+                            android:id="@+id/progressScore"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true"
+                            android:indeterminate="false"
+                            app:indicatorColor="#0F766E"
+                            app:indicatorSize="140dp"
+                            app:trackColor="#F1F5F9"
+                            app:trackThickness="12dp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvScoreText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0%"
+                                android:textColor="#0F766E"
+                                android:textSize="36sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:letterSpacing="0.08"
+                                android:text="ATS SCORE"
+                                android:textColor="#94A3B8"
+                                android:textSize="10sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvSummary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:lineSpacingExtra="4dp"
+                            android:textColor="#475569"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Personal Info Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#E2E8F0"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:id="@+id/tvName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:textColor="#0F172A"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        tools:text="John Doe" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Email: "
+                            android:textColor="#64748B"
+                            android:textSize="14sp" />
+                        <TextView
+                            android:id="@+id/tvEmail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#0F172A"
+                            android:textSize="14sp"
+                            tools:text="john@example.com" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Phone: "
+                            android:textColor="#64748B"
+                            android:textSize="14sp" />
+                        <TextView
+                            android:id="@+id/tvPhone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#0F172A"
+                            android:textSize="14sp"
+                            tools:text="+1 555-0123" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Address: "
+                            android:textColor="#64748B"
+                            android:textSize="14sp" />
+                        <TextView
+                            android:id="@+id/tvAddress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#0F172A"
+                            android:textSize="14sp"
+                            tools:text="New York, NY" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Experience Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#E2E8F0"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <View
+                            android:layout_width="4dp"
+                            android:layout_height="18dp"
+                            android:background="#0F766E" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            android:text="Experience"
+                            android:textColor="#0F172A"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvExperience"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="4dp"
+                        android:textColor="#475569"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Education Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#E2E8F0"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <View
+                            android:layout_width="4dp"
+                            android:layout_height="18dp"
+                            android:background="#0F766E" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            android:text="Education"
+                            android:textColor="#0F172A"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvEducation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="4dp"
+                        android:textColor="#475569"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Hard Skills Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#E2E8F0"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <View
+                            android:layout_width="4dp"
+                            android:layout_height="18dp"
+                            android:background="#0F766E" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            android:text="Hard Skills"
+                            android:textColor="#0F172A"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:text="Matched"
+                        android:textColor="#065F46"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                    <com.google.android.flexbox.FlexboxLayout
+                        android:id="@+id/flexHardMatched"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        app:alignItems="flex_start"
+                        app:flexWrap="wrap" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="#F1F5F9" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:text="Missing"
+                        android:textColor="#991B1B"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                    <com.google.android.flexbox.FlexboxLayout
+                        android:id="@+id/flexHardMissing"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:alignItems="flex_start"
+                        app:flexWrap="wrap" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Soft Skills Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#E2E8F0"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <View
+                            android:layout_width="4dp"
+                            android:layout_height="18dp"
+                            android:background="#7C3AED" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            android:text="Soft Skills"
+                            android:textColor="#0F172A"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:text="Matched"
+                        android:textColor="#065F46"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                    <com.google.android.flexbox.FlexboxLayout
+                        android:id="@+id/flexSoftMatched"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        app:alignItems="flex_start"
+                        app:flexWrap="wrap" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="#F1F5F9" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:text="Missing"
+                        android:textColor="#991B1B"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                    <com.google.android.flexbox.FlexboxLayout
+                        android:id="@+id/flexSoftMissing"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:alignItems="flex_start"
+                        app:flexWrap="wrap" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Formatting Issues Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="#FFFBEB"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#FDE68A"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <View
+                            android:layout_width="4dp"
+                            android:layout_height="18dp"
+                            android:background="#D97706" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            android:text="ATS Formatting Issues"
+                            android:textColor="#92400E"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/formatCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="#FEF3C7"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="3dp"
+                            android:text="0"
+                            android:textColor="#D97706"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <com.google.android.flexbox.FlexboxLayout
+                        android:id="@+id/flexFormatting"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:alignItems="flex_start"
+                        app:flexWrap="wrap" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

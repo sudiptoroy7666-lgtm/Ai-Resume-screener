@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="32dp">
+
+    <ProgressBar
+        android:id="@+id/progressBarDialog"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:indeterminate="true"
+        android:progressTint="#0F766E" />
+
+    <TextView
+        android:id="@+id/tvProgressMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Initializing..."
+        android:textAlignment="center"
+        android:textColor="#0F172A"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvProgressCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="#64748B"
+        android:textSize="13sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Please keep the app open. Screen will stay awake."
+        android:textAlignment="center"
+        android:textColor="#94A3B8"
+        android:textSize="11sp" />
+</LinearLayout>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background">
+
+    <!-- ===== APP BAR ===== -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="#134E4A"
+            app:title="Job Openings"
+            app:titleTextColor="@android:color/white"
+            app:titleTextAppearance="@style/TextAppearance.Material3.TitleMedium"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:navigationIconTint="@android:color/white"
+            app:subtitle="Manage positions &amp; candidates"
+            app:subtitleTextColor="#5EEAD4" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="16dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <!-- Add Job Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAddJob"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="16dp"
+            android:text="Create New Job Opening"
+            android:textStyle="bold"
+            app:backgroundTint="#0F766E"
+            app:cornerRadius="12dp"
+            app:elevation="4dp"
+            app:icon="@android:drawable/ic_input_add"
+            app:iconGravity="textStart"
+            app:iconSize="20dp"
+            app:iconTint="@android:color/white"
+            app:rippleColor="#99F6E4" />
+
+        <!-- Portal Info Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardBackgroundColor="#F0FDFA"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:strokeColor="#99F6E4"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="📤 Applicant Upload Portal"
+                    android:textColor="#0F766E"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Share the portal URL + Organization Code + Job ID with applicants so they can submit their resumes."
+                    android:textColor="#134E4A"
+                    android:textSize="11sp"
+                    android:lineSpacingExtra="2dp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Loading Indicator -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="32dp"
+            android:indeterminateTint="#0F766E"
+            android:visibility="gone" />
+
+        <!-- Empty State -->
+        <LinearLayout
+            android:id="@+id/tvEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingTop="48dp"
+            android:visibility="gone">
+
+            <View
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:background="@drawable/circle_bg"
+                android:backgroundTint="#F1F5F9" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="No job openings yet"
+                android:textColor="#0F172A"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Create your first position to start accepting applications!"
+                android:textAlignment="center"
+                android:textColor="#94A3B8"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- Jobs List -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="16dp" />
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

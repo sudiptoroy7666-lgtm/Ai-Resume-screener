@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    tools:context=".ApplicantPortalActivity">
+
+    <!-- ===== APP BAR ===== -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="#134E4A"
+            app:title="Submit to HR"
+            app:titleTextColor="@android:color/white"
+            app:titleTextAppearance="@style/TextAppearance.Material3.TitleMedium"
+            app:subtitle="Applicant Portal"
+            app:subtitleTextColor="#5EEAD4"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:navigationIconTint="@android:color/white"
+            />
+
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- ===== SCROLLABLE CONTENT ===== -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:paddingBottom="32dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="20dp">
+
+            <!-- ===== HEADER CARD ===== -->
+            <!-- ===== QUICK ACTIONS SECTION ===== -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="12dp"
+                android:text="Quick Actions"
+                android:textColor="#134E4A"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.05" />
+
+            <!-- Row 1: Two action cards side by side -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+
+                <!-- CHECK MY RESUME CARD -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardCheckResume"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    app:cardBackgroundColor="@android:color/white"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="#E2E8F0"
+                    app:strokeWidth="1dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:gravity="center">
+
+                        <View
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:background="@drawable/circle_bg"
+                            android:backgroundTint="#0D9488" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="Check My Resume"
+                            android:textColor="#0F172A"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Self-scan vs any JD"
+                            android:textColor="#64748B"
+                            android:textSize="11sp"
+                            android:gravity="center" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- VIEW HISTORY CARD -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardViewHistory"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="6dp"
+                    app:cardBackgroundColor="@android:color/white"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="#E2E8F0"
+                    app:strokeWidth="1dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:gravity="center">
+
+                        <View
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:background="@drawable/circle_bg"
+                            android:backgroundTint="#134E4A" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="My History"
+                            android:textColor="#0F172A"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Past scans &amp; reports"
+                            android:textColor="#64748B"
+                            android:textSize="11sp"
+                            android:gravity="center" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <!-- Divider with label -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="#E2E8F0" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="12dp"
+                    android:text="SUBMIT TO HR"
+                    android:textColor="#94A3B8"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.08" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="#E2E8F0" />
+            </LinearLayout>
+
+            <!-- ===== JOB REFERENCE CARD ===== -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#E2E8F0"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="18dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:layout_width="4dp"
+                            android:layout_height="22dp"
+                            android:background="#0F766E" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:text="Job Reference"
+                            android:textColor="#0F172A"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Organization Code (from HR)"
+                        app:boxBackgroundColor="#F8FAFC"
+                        app:boxCornerRadiusBottomEnd="12dp"
+                        app:boxCornerRadiusBottomStart="12dp"
+                        app:boxCornerRadiusTopEnd="12dp"
+                        app:boxCornerRadiusTopStart="12dp"
+                        app:boxStrokeColor="#E2E8F0"
+                        app:boxStrokeWidth="1.5dp"
+                        app:boxStrokeWidthFocused="2dp"
+                        app:hintTextColor="#94A3B8"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etOrgCode"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:textColor="#0F172A"
+                            android:textSize="15sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:hint="Job Opening ID (from HR)"
+                        app:boxBackgroundColor="#F8FAFC"
+                        app:boxCornerRadiusBottomEnd="12dp"
+                        app:boxCornerRadiusBottomStart="12dp"
+                        app:boxCornerRadiusTopEnd="12dp"
+                        app:boxCornerRadiusTopStart="12dp"
+                        app:boxStrokeColor="#E2E8F0"
+                        app:boxStrokeWidth="1.5dp"
+                        app:boxStrokeWidthFocused="2dp"
+                        app:hintTextColor="#94A3B8"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etJobId"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:textColor="#0F172A"
+                            android:textSize="15sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Ask HR for the correct codes before submitting"
+                        android:textColor="#94A3B8"
+                        android:textSize="11sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ===== PERSONAL INFO CARD ===== -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#E2E8F0"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="18dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:layout_width="4dp"
+                            android:layout_height="22dp"
+                            android:background="#0F766E" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:text="Personal Information"
+                            android:textColor="#0F172A"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Full Name"
+                        app:boxBackgroundColor="#F8FAFC"
+                        app:boxCornerRadiusBottomEnd="12dp"
+                        app:boxCornerRadiusBottomStart="12dp"
+                        app:boxCornerRadiusTopEnd="12dp"
+                        app:boxCornerRadiusTopStart="12dp"
+                        app:boxStrokeColor="#E2E8F0"
+                        app:boxStrokeWidth="1.5dp"
+                        app:boxStrokeWidthFocused="2dp"
+                        app:hintTextColor="#94A3B8"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etFullName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPersonName"
+                            android:maxLines="1"
+                            android:textColor="#0F172A"
+                            android:textSize="15sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:hint="Email Address"
+                        app:boxBackgroundColor="#F8FAFC"
+                        app:boxCornerRadiusBottomEnd="12dp"
+                        app:boxCornerRadiusBottomStart="12dp"
+                        app:boxCornerRadiusTopEnd="12dp"
+                        app:boxCornerRadiusTopStart="12dp"
+                        app:boxStrokeColor="#E2E8F0"
+                        app:boxStrokeWidth="1.5dp"
+                        app:boxStrokeWidthFocused="2dp"
+                        app:hintTextColor="#94A3B8"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textEmailAddress"
+                            android:maxLines="1"
+                            android:textColor="#0F172A"
+                            android:textSize="15sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ===== RESUME UPLOAD CARD ===== -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#E2E8F0"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="18dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:layout_width="4dp"
+                            android:layout_height="22dp"
+                            android:background="#0F766E" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:text="Resume Upload"
+                            android:textColor="#0F172A"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="#F1F5F9"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="4dp"
+                            android:text="PDF · DOCX"
+                            android:textColor="#64748B"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnPickResume"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#F0FDFA"
+                        android:minHeight="110dp"
+                        android:text="Tap to select your resume"
+                        android:textColor="#0F766E"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        app:cornerRadius="16dp"
+                        app:icon="@drawable/baseline_cloud_upload_24"
+                        app:iconGravity="top"
+                        app:iconSize="28dp"
+                        app:iconTint="#0D9488"
+                        app:rippleColor="#CCFBF1"
+                        app:strokeColor="#99F6E4"
+                        app:strokeWidth="2dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                    <!-- File Info Container (hidden initially) -->
+                    <LinearLayout
+                        android:id="@+id/fileInfoContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:background="#D1FAE5"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="12dp"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@android:drawable/checkbox_on_background"
+                            app:tint="#059669" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvFileName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="#065F46"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                tools:text="resume_john_doe.pdf" />
+
+                            <TextView
+                                android:id="@+id/tvFileInfo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="#059669"
+                                android:textSize="12sp"
+                                tools:text="PDF • 245 KB" />
+                        </LinearLayout>
+
+                        <ImageButton
+                            android:id="@+id/btnRemoveFile"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:contentDescription="Remove file"
+                            android:src="@android:drawable/ic_menu_close_clear_cancel"
+                            app:tint="#991B1B" />
+                    </LinearLayout>
+
+                    <!-- Extraction Status -->
+                    <TextView
+                        android:id="@+id/tvExtractionStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="PDF or .docx only, max 10MB"
+                        android:textColor="#94A3B8"
+                        android:textSize="11sp" />
+
+                    <ProgressBar
+                        android:id="@+id/extractionProgress"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="6dp"
+                        android:layout_marginTop="8dp"
+                        android:indeterminate="true"
+                        android:progressTint="#0D9488"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ===== SUBMIT BUTTON ===== -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:backgroundTint="#0F766E"
+                android:elevation="4dp"
+                android:enabled="false"
+                android:alpha="0.5"
+                android:text="Submit Application"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:cornerRadius="14dp"
+                app:icon="@android:drawable/ic_menu_send"
+                app:iconGravity="textStart"
+                app:iconTint="@android:color/white"
+                app:rippleColor="#99F6E4"
+                style="@style/Widget.MaterialComponents.Button" />
+
+            <!-- Spacer for bottom padding -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16dp" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

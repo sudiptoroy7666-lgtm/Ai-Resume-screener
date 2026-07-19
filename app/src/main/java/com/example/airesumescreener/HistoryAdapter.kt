@@ -4,13 +4,16 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.airesumescreener.databinding.ItemHistoryBinding
 import com.google.android.material.progressindicator.CircularProgressIndicator
 
-class HistoryAdapter(private val items: List<ScanRecord>) :
-    RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
+class HistoryAdapter(
+    private val items: List<HistoryItem>,
+    private val onItemClick: ((HistoryItem) -> Unit)? = null
+) : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
 
     private val TEAL_700 = Color.parseColor("#0F766E")
     private val GREEN_700 = Color.parseColor("#065F46")
@@ -21,19 +24,42 @@ class HistoryAdapter(private val items: List<ScanRecord>) :
     private val RED_BG = Color.parseColor("#FEE2E2")
     private val AMBER_500 = Color.parseColor("#D97706")
     private val RED_500 = Color.parseColor("#DC2626")
+    private val BLUE_BG = Color.parseColor("#E0F2FE")
+    private val BLUE_700 = Color.parseColor("#0369A1")
+    private val PURPLE_BG = Color.parseColor("#F3E8FF")
+    private val PURPLE_700 = Color.parseColor("#7C3AED")
 
-    inner class ViewHolder(val binding: ItemHistoryBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    inner class ViewHolder(val binding: ItemHistoryBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding =
-            ItemHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
         with(holder.binding) {
+            // Source badge
+            if (item.source == "batch") {
+                tvSourceBadge.text = "HR BATCH"
+                tvSourceBadge.setBackgroundColor(PURPLE_BG)
+                tvSourceBadge.setTextColor(PURPLE_700)
+                val detail = buildString {
+                    if (!item.orgName.isNullOrBlank()) append(item.orgName)
+                    if (!item.jobTitle.isNullOrBlank()) {
+                        if (isNotBlank()) append(" — ")
+                        append(item.jobTitle)
+                    }
+                }
+                tvSourceDetail.text = detail.ifBlank { "Admin Portal Analysis" }
+                tvSourceDetail.visibility = View.VISIBLE
+            } else {
+                tvSourceBadge.text = "PERSONAL"
+                tvSourceBadge.setBackgroundColor(BLUE_BG)
+                tvSourceBadge.setTextColor(BLUE_700)
+                tvSourceDetail.text = "Quick Scan"
+                tvSourceDetail.visibility = View.VISIBLE
+            }
 
             miniScoreRing.setProgress(item.score, true)
             tvScore.text = "${item.score}%"
@@ -61,7 +87,6 @@ class HistoryAdapter(private val items: List<ScanRecord>) :
                     RED_500
                 }
             }
-
             setIndicatorColorCompat(miniScoreRing, ringColor)
 
             tvFileName.text = item.fileName
@@ -71,6 +96,8 @@ class HistoryAdapter(private val items: List<ScanRecord>) :
             val matchedText = if (item.hardSkillsMatched.isEmpty()) "None"
             else item.hardSkillsMatched.take(3).joinToString(", ")
             tvKeywords.text = matchedText
+
+            root.setOnClickListener { onItemClick?.invoke(item) }
         }
     }
 
