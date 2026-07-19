@@ -73,9 +73,9 @@ Traditional ATS systems reject up to **75% of resumes** before a human ever sees
 ---
 
 ## 3. User Roles & Detailed Workflows
-
+---
 ### 3.1 🧑‍💼 Applicant / Personal User
-
+---
 #### Flow A: Quick Resume Scan
 
 Splash Screen
@@ -96,7 +96,7 @@ Splash Screen
             • AI Summary
           → Export to Excel OR Screen Another
 
-
+---
 #### Flow B: Submit Resume to HR
 
 Splash Screen
@@ -111,11 +111,11 @@ Splash Screen
         → [Save Candidate to Firestore]
         → [Increment CV Count]
       → Success Toast → Form Reset
-
+---
 
 ### 3.2 🏢 HR / Recruiter (Admin)
 
-
+---
 Splash Screen
   → Role Selection ("I'm HR / Recruiter")
     → AdminActivity
@@ -225,7 +225,7 @@ Any Screen → Menu → "History"
 
 
 ## 6. Project Structure
-
+---
 app/
 ├── src/main/
 │   ├── java/com/example/airesumescreener/
@@ -294,7 +294,6 @@ build.gradle.kts                            # Root-level build config
 settings.gradle.kts                         # Module settings
 local.properties                            # API keys (NOT in version control)
 gradle.properties                           # Gradle JVM args
-```
 
 ---
 
