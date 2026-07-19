@@ -84,7 +84,6 @@ The app is designed as a **single APK** that serves both personas through a role
 - Animated skill chips and score indicators
 - Offline-first with Firebase persistence
 
----
 
 ## 3. User Roles & Detailed Workflows
 
@@ -473,7 +472,6 @@ packaging {
 ```
 > These exclusions are **required** to prevent build failures caused by conflicting META-INF files from Apache POI and other libraries.
 
----
 
 ## 6. Prerequisites
 
