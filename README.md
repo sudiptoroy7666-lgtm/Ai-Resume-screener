@@ -99,13 +99,12 @@ SplashActivity (1.5s branded animation)
 RoleSelectionActivity
     ├── "I'm an Applicant" → ApplicantPortalActivity
     └── "I'm HR / Recruiter" → AdminActivity (PIN required)
-```
 
 ### 3.2 Applicant / Personal User Workflows
 
 #### Workflow A: Quick Scan (Personal ATS Check)
 
-```
+
 ApplicantPortalActivity → "Check My Resume" → MainActivity
     │
     ├─ Step 1: Upload Resume (PDF/DOCX/DOC)
@@ -130,11 +129,11 @@ ApplicantPortalActivity → "Check My Resume" → MainActivity
           ├─ ATS Formatting Issues (Flexbox Chips)
           ├─ "Export Report" → Excel (.xlsx)
           └─ "Screen Another" → Reset Form
-```
+
 
 #### Workflow B: Submit Resume to HR
 
-```
+
 ApplicantPortalActivity
     │
     ├─ Enter Organization Code (from HR)
@@ -150,11 +149,11 @@ ApplicantPortalActivity
           ├─ Saves candidate document with status "pending"
           ├─ Increments job cvCount
           └─ Shows success confirmation + auto-reset
-```
+
 
 #### Workflow C: View History
 
-```
+
 HistoryActivity
     │
     ├─ Loads local personal scans (HistoryManager/JSON)
@@ -166,13 +165,12 @@ HistoryActivity
     └─ Tap Item:
           ├─ Batch result → CandidateReportActivity (full detail)
           └─ Personal scan → Toast with summary
-```
 
 ### 3.3 HR / Recruiter (Admin) Workflows
 
 #### Workflow D: HR Portal Access
 
-```
+
 AdminActivity
     │
     ├─ First Launch:
@@ -183,11 +181,10 @@ AdminActivity
           └─ "Enter Admin PIN" dialog
           └─ Validates against stored PIN
           └─ On success: loads owned organizations
-```
+
 
 #### Workflow E: Organization Management
 
-```
 AdminActivity (Authenticated)
     │
     ├─ "Create New Organization"
@@ -204,11 +201,11 @@ AdminActivity (Authenticated)
           ├─ Deletes all jobs and candidates recursively
           ├─ Removes local ownership
           └─ Refreshes list
-```
+
 
 #### Workflow F: Job Opening Management
 
-```
+
 JobDetailsActivity (for specific org)
     │
     ├─ "Create New Job Opening"
@@ -223,11 +220,11 @@ JobDetailsActivity (for specific org)
     │     └─ "Close Job" → Deletes job + all candidates
     │
     └─ Info card shows portal sharing instructions
-```
+
 
 #### Workflow G: Batch AI Analysis
 
-```
+
 JobDetailsActivity → "Analyze" button
     │
     ├─ Validates job has requirements
@@ -249,11 +246,11 @@ JobDetailsActivity → "Analyze" button
     ├─ Releases WakeLock
     ├─ Dismisses progress dialog
     └─ Launches JobResultsActivity with analyzed candidates
-```
+
 
 #### Workflow H: Results Review & Export
 
-```
+
 JobResultsActivity
     │
     ├─ Scenario A: Fresh analysis (receives candidates via Intent)
@@ -273,13 +270,13 @@ JobResultsActivity
     └─ "Export All to Excel"
           ├─ File picker for save location
           └─ Generates .xlsx with all candidate data
-```
 
----
+
+
 
 ## 4. Complete Project Structure
 
-```
+
 airesumescreener/
 ├── app/
 │   ├── build.gradle.kts                    # App-level build config
@@ -374,9 +371,8 @@ airesumescreener/
 ├── gradle.properties                       # Gradle JVM settings
 ├── local.properties                        # SDK path + API keys (DO NOT commit)
 └── README.md                               # This file
-```
 
----
+
 
 ## 5. Technology Stack & Dependencies
 
@@ -1438,14 +1434,6 @@ buildTypes {
 - `fix/batch-analysis-crash`
 - `refactor/move-parsing-backend`
 
-### Commit Messages
-Follow conventional commits:
-```
-feat: add Excel export for personal scans
-fix: prevent WakeLock leak on Activity destroy
-docs: update Firestore security rules
-refactor: extract API config to separate file
-```
 
 ### Code Style
 - Use Kotlin idioms (data classes, extension functions, scope functions)
@@ -1453,22 +1441,4 @@ refactor: extract API config to separate file
 - All UI text should be in `strings.xml` for localization readiness
 - Coroutines should always use `lifecycleScope` or `viewModelScope`
 
----
-
-## 22. License
-
-```
-Copyright (c) 2026 [Your Company Name]
-
-This software and associated documentation files are proprietary and confidential.
-Unauthorized copying, distribution, or modification is strictly prohibited
-without prior written permission from the copyright holder.
-```
-
----
-
-> **For questions, issues, or handover support, contact:**  
-> 📧 [your-email@company.com]  
-> 📱 [Your Name / Lead Developer]  
-> 🏢 [Company Name]
-```
+-
