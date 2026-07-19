@@ -1,4 +1,3 @@
-```markdown
 # 🚀 ResumeAI Enterprise: ATS Resume Screener & Applicant Portal
 
 > **Version:** 1.0  
@@ -91,7 +90,6 @@ The app is designed as a **single APK** that serves both personas through a role
 
 ### 3.1 Application Launch Flow
 
-```
 App Launch
     │
     ▼
