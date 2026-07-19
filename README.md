@@ -73,9 +73,7 @@ Traditional ATS systems reject up to **75% of resumes** before a human ever sees
 ---
 
 ## 3. User Roles & Detailed Workflows
----
 ### 3.1 🧑‍💼 Applicant / Personal User
----
 #### Flow A: Quick Resume Scan
 
 Splash Screen
@@ -141,7 +139,6 @@ Splash Screen
 ```
 
 ### 3.3 📜 History Flow (Both Roles)
-```
 Any Screen → Menu → "History"
   → HistoryActivity
     → Loads local personal scans (from device storage)
@@ -223,9 +220,8 @@ Any Screen → Menu → "History"
 | RecyclerView | 1.3.2 | List rendering |
 | Core SplashScreen | 1.0.1 | Splash screen API |
 
-
-## 6. Project Structure
 ---
+## 6. Project Structure
 app/
 ├── src/main/
 │   ├── java/com/example/airesumescreener/
@@ -295,7 +291,6 @@ settings.gradle.kts                         # Module settings
 local.properties                            # API keys (NOT in version control)
 gradle.properties                           # Gradle JVM args
 
----
 
 ## 7. Data Models & Schema
 
