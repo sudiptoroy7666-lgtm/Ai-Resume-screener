@@ -14,14 +14,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.airesumescreener.databinding.ActivityJobDetailsBinding
 import com.google.gson.JsonParser
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.yield
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicInteger
 
 class JobDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityJobDetailsBinding
@@ -31,6 +36,9 @@ class JobDetailsActivity : AppCompatActivity() {
     private var orgName = ""
     private lateinit var wakeLockManager: WakeLockManager
     private var progressDialog: AlertDialog? = null
+
+    // APPROACH 3: Concurrency limit - process 3 resumes simultaneously
+    private val MAX_CONCURRENT_REQUESTS = 3
 
     private val cerebrasApi: CerebrasApi by lazy {
         Retrofit.Builder().baseUrl(BASE_URL)
@@ -54,16 +62,10 @@ class JobDetailsActivity : AppCompatActivity() {
         binding.topAppBar.title = orgName
         binding.topAppBar.setNavigationOnClickListener { finish() }
 
-
-
-        // ... inside onCreate() ...
-
         jobAdapter = JobOpeningAdapter(jobs,
             onJobClick = { },
             onAnalyzeClick = { startBatchAnalysis(it) },
             onResultsClick = { job ->
-                // Launch Results activity WITHOUT passing the CANDIDATES extra.
-                // This tells JobResultsActivity to load from Firestore cache.
                 val intent = Intent(this, JobResultsActivity::class.java).apply {
                     putExtra("JOB_TITLE", job.title)
                     putExtra("ORG_NAME", orgName)
@@ -102,7 +104,7 @@ class JobDetailsActivity : AppCompatActivity() {
             setPadding(40, 20, 40, 20)
             minLines = 2
         }
-        val requirements = EditText(this).apply {  // ← NEW FIELD
+        val requirements = EditText(this).apply {
             hint = "Full job requirements (for AI matching)\nPaste skills, qualifications, responsibilities..."
             setPadding(40, 20, 40, 20)
             minLines = 6
@@ -123,19 +125,19 @@ class JobDetailsActivity : AppCompatActivity() {
             .setPositiveButton("Create") { _, _ ->
                 val t = title.text.toString().trim()
                 val d = desc.text.toString().trim()
-                val r = requirements.text.toString().trim()  // ← NEW
+                val r = requirements.text.toString().trim()
 
                 if (t.length < 3) {
                     Toast.makeText(this, "Title: min 3 chars", Toast.LENGTH_SHORT).show()
                     return@setPositiveButton
                 }
-                if (r.length < 50) {  // ← NEW VALIDATION
+                if (r.length < 50) {
                     Toast.makeText(this, "Requirements: min 50 chars for accurate AI matching", Toast.LENGTH_SHORT).show()
                     return@setPositiveButton
                 }
 
                 lifecycleScope.launch {
-                    FirebaseService.createJobOpening(orgId, t, d, r).fold(  // ← PASS REQUIREMENTS
+                    FirebaseService.createJobOpening(orgId, t, d, r).fold(
                         onSuccess = {
                             Toast.makeText(this@JobDetailsActivity, "Created: $it", Toast.LENGTH_SHORT).show()
                             loadJobs()
@@ -163,127 +165,100 @@ class JobDetailsActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 updateProgress("Loading candidates…", 0, 0, true)
-                val candidates = FirebaseService.getCandidates(orgId, job.id)
+                val allCandidates = FirebaseService.getCandidates(orgId, job.id)
 
-                if (candidates.isEmpty()) {
+                if (allCandidates.isEmpty()) {
                     dismissProgress()
                     Toast.makeText(this@JobDetailsActivity, "No CVs found.", Toast.LENGTH_LONG).show()
                     return@launch
                 }
 
-                val total = candidates.size
-                val done = mutableListOf<Candidate>()
-                var lastUiUpdate = 0L
+                // ===== APPROACH 1: Skip already analyzed resumes =====
+                val pendingCandidates = allCandidates.filter {
+                    it.status == "pending" || it.status == "Error"
+                }
 
-                // Truncate job requirements to prevent token overflow (15K chars ≈ 4K tokens)
+                if (pendingCandidates.isEmpty()) {
+                    dismissProgress()
+                    Toast.makeText(
+                        this@JobDetailsActivity,
+                        "All ${allCandidates.size} resumes already analyzed. Click 'Results' to view.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    // Navigate directly to results
+                    startActivity(Intent(this@JobDetailsActivity, JobResultsActivity::class.java).apply {
+                        putExtra("JOB_TITLE", job.title)
+                        putExtra("ORG_NAME", orgName)
+                        putExtra("ORG_ID", orgId)
+                        putExtra("JOB_ID", job.id)
+                    })
+                    return@launch
+                }
+
+                val total = pendingCandidates.size
+                val skipped = allCandidates.size - pendingCandidates.size
+
+                if (skipped > 0) {
+                    updateProgress("Skipping $skipped already analyzed. Processing $total remaining…", 0, total, false)
+                }
+
+                // Truncate job requirements to prevent token overflow
                 val jobRequirements = job.requirements.take(15000)
 
-                for (i in candidates.indices) {
-                    yield()
-                    val c = candidates[i]
-                    val now = System.currentTimeMillis()
+                // ===== APPROACH 3: Concurrent Processing with Semaphore =====
+                val semaphore = Semaphore(MAX_CONCURRENT_REQUESTS)
+                val processedCount = AtomicInteger(0)
+                val analyzedCandidates = mutableListOf<Candidate>()
 
-                    if (now - lastUiUpdate > 150L || i == 0 || i == total - 1) {
-                        updateProgress("Analyzing: ${c.name}", i, total, false)
-                        lastUiUpdate = now
-                    }
+                coroutineScope {
+                    val deferredResults = pendingCandidates.map { candidate ->
+                        async(Dispatchers.IO) {
+                            semaphore.withPermit {
+                                yield()
 
-                    try {
-                        if (c.resumeText.isBlank()) {
-                            c.status = "Error"
-                            done += c
-                            continue
-                        }
+                                val result = analyzeCandidate(candidate, jobRequirements)
 
-                        // ✅ NEW PROMPT WITH JOB REQUIREMENTS
-                        val prompt = """
-                        You are an expert ATS (Applicant Tracking System) analyzer.
-                        
-                        JOB REQUIREMENTS:
-                        ${jobRequirements}
-                        
-                        CANDIDATE RESUME:
-                        ${c.resumeText.take(20000)}
-                        
-                        Compare the resume against the job requirements and output ONLY JSON:
-                        {
-                          "score": <int 0-100 based on how well resume matches job requirements>,
-                          "name": "<extracted from resume>",
-                          "email": "<extracted>",
-                          "phone": "<extracted>",
-                          "address": "<extracted>",
-                          "education": "<brief summary>",
-                          "experience": "<brief summary>",
-                          "hard_skills_matched": [<skills in resume that match job requirements>],
-                          "hard_skills_missing": [<skills in job requirements not found in resume>],
-                          "soft_skills_matched": [<soft skills in resume that match>],
-                          "soft_skills_missing": [<soft skills in requirements not found>],
-                          "formatting_issues": [<ATS formatting problems>],
-                          "summary": "<1-2 sentence assessment of fit>"
-                        }
-                    """.trimIndent()
+                                // Thread-safe progress update
+                                val currentCount = processedCount.incrementAndGet()
 
-                        val req = ChatRequest(MODEL_ID, listOf(
-                            Message("system", "You are an expert ATS analyzer. Output only valid JSON."),
-                            Message("user", prompt)
-                        ))
-
-                        var res: retrofit2.Response<ChatResponse>? = null
-                        var retries = 0
-
-                        while (retries < 3) {
-                            res = withContext(Dispatchers.IO) {
-                                cerebrasApi.analyze("Bearer ${BuildConfig.CEREBRAS_API_KEY}", req)
-                            }
-                            if (res.isSuccessful) break
-                            if (res.code() == 429) {
-                                delay(10000)
-                                retries++
-                            } else break
-                        }
-
-                        if (res?.isSuccessful == true) {
-                            val raw = res.body()?.choices?.firstOrNull()?.message?.content.orEmpty()
-                            val json = extractJson(raw)?.let { JsonParser.parseString(it).asJsonObject }
-
-                            if (json != null) {
-                                c.score = json.optI("score")
-                                c.name = json.optS("name", c.name)
-                                c.email = json.optS("email", c.email)
-                                c.phone = json.optS("phone")
-                                c.address = json.optS("address")
-                                c.education = json.optS("education")
-                                c.experience = json.optS("experience")
-                                c.summary = json.optS("summary")
-                                c.hardSkillsMatched = json.optL("hard_skills_matched")
-                                c.hardSkillsMissing = json.optL("hard_skills_missing")
-                                c.softSkillsMatched = json.optL("soft_skills_matched")
-                                c.softSkillsMissing = json.optL("soft_skills_missing")
-                                c.formattingIssues = json.optL("formatting_issues")
-                                c.status = "analyzed"
-
-                                withContext(Dispatchers.IO) {
-                                    FirebaseService.updateCandidate(c)
+                                withContext(Dispatchers.Main) {
+                                    updateProgress(
+                                        "Analyzing: ${candidate.name}",
+                                        currentCount,
+                                        total,
+                                        false
+                                    )
                                 }
-                            } else {
-                                c.status = "Error"
+
+                                result
                             }
-                        } else {
-                            c.status = "Error"
                         }
-                    } catch (e: Exception) {
-                        c.status = "Error"
-                        e.printStackTrace()
                     }
 
-                    done += c
-                    delay(3000)
+                    // Wait for all concurrent jobs to complete
+                    val results = deferredResults.awaitAll()
+                    analyzedCandidates.addAll(results)
                 }
+
+                // Combine with already-analyzed candidates
+                val alreadyAnalyzed = allCandidates.filter { it.status == "analyzed" }
+                val allResults = alreadyAnalyzed + analyzedCandidates
 
                 withContext(Dispatchers.Main) {
                     dismissProgress()
+
+                    val successCount = analyzedCandidates.count { it.status == "analyzed" }
+                    val errorCount = analyzedCandidates.count { it.status == "Error" }
+
+                    Toast.makeText(
+                        this@JobDetailsActivity,
+                        "✅ Analyzed $successCount resumes. $errorCount errors. $skipped skipped (already done).",
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                    // TO THIS:
                     startActivity(Intent(this@JobDetailsActivity, JobResultsActivity::class.java).apply {
-                        putParcelableArrayListExtra("CANDIDATES", ArrayList(done))
+                        // ✅ Removed ArrayList to prevent TransactionTooLargeException on large batches
                         putExtra("JOB_TITLE", job.title)
                         putExtra("ORG_NAME", orgName)
                         putExtra("ORG_ID", orgId)
@@ -297,6 +272,101 @@ class JobDetailsActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    /**
+     * Analyzes a single candidate. Extracted to a separate function for concurrent execution.
+     * APPROACH 2: No hardcoded delay - relies on API response time and retry logic.
+     */
+    private suspend fun analyzeCandidate(c: Candidate, jobRequirements: String): Candidate {
+        try {
+            if (c.resumeText.isBlank()) {
+                c.status = "Error"
+                return c
+            }
+
+            val prompt = """
+                You are an expert ATS (Applicant Tracking System) analyzer.
+                
+                JOB REQUIREMENTS:
+                ${jobRequirements}
+                
+                CANDIDATE RESUME:
+                ${c.resumeText.take(20000)}
+                
+                Compare the resume against the job requirements and output ONLY JSON:
+                {
+                  "score": <int 0-100 based on how well resume matches job requirements>,
+                  "name": "<extracted from resume>",
+                  "email": "<extracted>",
+                  "phone": "<extracted>",
+                  "address": "<extracted>",
+                  "education": "<brief summary>",
+                  "experience": "<brief summary>",
+                  "hard_skills_matched": [<skills in resume that match job requirements>],
+                  "hard_skills_missing": [<skills in job requirements not found in resume>],
+                  "soft_skills_matched": [<soft skills in resume that match>],
+                  "soft_skills_missing": [<soft skills in requirements not found>],
+                  "formatting_issues": [<ATS formatting problems>],
+                  "summary": "<1-2 sentence assessment of fit>"
+                }
+            """.trimIndent()
+
+            val req = ChatRequest(MODEL_ID, listOf(
+                Message("system", "You are an expert ATS analyzer. Output only valid JSON."),
+                Message("user", prompt)
+            ))
+
+            var res: retrofit2.Response<ChatResponse>? = null
+            var retries = 0
+
+            while (retries < 3) {
+                res = withContext(Dispatchers.IO) {
+                    cerebrasApi.analyze("Bearer ${BuildConfig.CEREBRAS_API_KEY}", req)
+                }
+                if (res.isSuccessful) break
+                if (res.code() == 429) {
+                    kotlinx.coroutines.delay(10000)
+                    retries++
+                } else break
+            }
+
+            if (res?.isSuccessful == true) {
+                val raw = res.body()?.choices?.firstOrNull()?.message?.content.orEmpty()
+                val json = extractJson(raw)?.let { JsonParser.parseString(it).asJsonObject }
+
+                if (json != null) {
+                    c.score = json.optI("score")
+                    c.name = json.optS("name", c.name)
+                    c.email = json.optS("email", c.email)
+                    c.phone = json.optS("phone")
+                    c.address = json.optS("address")
+                    c.education = json.optS("education")
+                    c.experience = json.optS("experience")
+                    c.summary = json.optS("summary")
+                    c.hardSkillsMatched = json.optL("hard_skills_matched")
+                    c.hardSkillsMissing = json.optL("hard_skills_missing")
+                    c.softSkillsMatched = json.optL("soft_skills_matched")
+                    c.softSkillsMissing = json.optL("soft_skills_missing")
+                    c.formattingIssues = json.optL("formatting_issues")
+                    c.status = "analyzed"
+
+                    withContext(Dispatchers.IO) {
+                        FirebaseService.updateCandidate(c)
+                    }
+                } else {
+                    c.status = "Error"
+                }
+            } else {
+                c.status = "Error"
+            }
+        } catch (e: Exception) {
+            c.status = "Error"
+            e.printStackTrace()
+        }
+
+        // APPROACH 2: No delay(3000) - removed completely
+        return c
     }
 
     private fun closeJob(job: JobOpening) {
@@ -335,10 +405,10 @@ class JobDetailsActivity : AppCompatActivity() {
                 dv.findViewById<TextView>(R.id.tvProgressMessage)?.text = msg
                 dv.findViewById<ProgressBar>(R.id.progressBarDialog)?.apply {
                     isIndeterminate = indeterminate
-                    if (!indeterminate && total > 0) { max = total; progress = cur + 1 }
+                    if (!indeterminate && total > 0) { max = total; progress = cur }
                 }
                 dv.findViewById<TextView>(R.id.tvProgressCount)?.text =
-                    if (total > 0 && !indeterminate) "${cur + 1} / $total" else ""
+                    if (total > 0 && !indeterminate) "$cur / $total" else ""
             }
         }
     }
